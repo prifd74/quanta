@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-zinc-900 text-white">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quanta Discord Bot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html, body {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      cursor: default;
+    }
+    .gradient-hover:hover {
+      background: linear-gradient(135deg, #ff8c00, #ff4d00);
+      transition: all 0.4s ease;
+      transform: translateY(-6px) scale(1.05);
+      box-shadow: 0 4px 20px rgba(255, 140, 0, 0.4);
+    }
+    .nav-hover:hover {
+      color: #ff8c00;
+      text-shadow: 0 0 8px #ff8c00;
+      transition: all 0.3s ease-in-out;
+    }
+    .fade-in {
+      animation: fadeIn 1.2s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .float-animate {
+      animation: float 4s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col relative overflow-x-hidden">
+
+  <!-- 3D Particle Background -->
+  <div class="absolute inset-0 z-0 pointer-events-none" id="vanta-bg"></div>
+  
+  <!-- Navbar -->
+  <nav class="relative z-10 flex justify-between items-center px-10 py-6 bg-zinc-950 shadow-md">
+    <div class="text-2xl font-bold tracking-wide text-orange-400">⚙️ Quanta</div>
+    <div class="flex gap-6 text-lg font-medium">
+      <a href="#team" class="nav-hover">Team</a>
+      <a href="#reviews" class="nav-hover">Reviews</a>
+      <a href="#status" class="nav-hover">Status</a>
+      <a href="https://discord.com/oauth2/authorize?client_id=1391667962322358282" target="_blank" class="nav-hover">Invite</a>
+      <a href="https://discordbotlist.com/bots/quanta" target="_blank" class="nav-hover">Vote</a>
+      <a href="https://discord.gg/KMaVP2xupg" target="_blank" class="nav-hover">Support</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="text-center py-20 px-6 fade-in relative z-10">
+    <h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">
+      Power Up Your Server with Quanta
+    </h1>
+    <p class="text-lg text-gray-300 max-w-xl mx-auto mb-10">
+      Quanta brings blazing speed, powerful tools, and next-gen Discord features for your community.
+    </p>
+    <a href="https://discord.com/oauth2/authorize?client_id=1391667962322358282" target="_blank" class="px-6 py-3 text-lg font-semibold text-black rounded-full bg-gradient-to-r from-orange-400 to-red-500 hover:scale-105 transition">
+      🚀 Invite Quanta
+    </a>
+  </section>
+
+  <!-- Features -->
+  <section class="py-20 bg-zinc-800 text-center fade-in relative z-10">
+    <h2 class="text-4xl font-bold mb-12 text-orange-400">🚀 Quanta Features</h2>
+    <p class="text-lg text-gray-400 max-w-3xl mx-auto mb-10">
+      From powerful moderation to seamless music playback, Quanta is an all-in-one Discord solution designed to scale with your community. Built with speed, stability, and style.
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8">
+      <div class="bg-zinc-900 p-6 rounded-xl gradient-hover shadow-lg float-animate">
+        <h3 class="text-xl font-bold text-orange-300 mb-2">🎶 24/7 Music</h3>
+        <p class="text-gray-300">Keep the vibes alive with nonstop music playback and filters.</p>
+      </div>
+      <div class="bg-zinc-900 p-6 rounded-xl gradient-hover shadow-lg float-animate">
+        <h3 class="text-xl font-bold text-orange-300 mb-2">🛡️ Auto Moderation</h3>
+        <p class="text-gray-300">Protect your server with intelligent, real-time filtering.</p>
+      </div>
+      <div class="bg-zinc-900 p-6 rounded-xl gradient-hover shadow-lg float-animate">
+        <h3 class="text-xl font-bold text-orange-300 mb-2">📈 Analytics</h3>
+        <p class="text-gray-300">Monitor server health, growth, and engagement metrics.</p>
+      </div>
+      <div class="bg-zinc-900 p-6 rounded-xl gradient-hover shadow-lg float-animate">
+        <h3 class="text-xl font-bold text-orange-300 mb-2">🎮 Mini Games</h3>
+        <p class="text-gray-300">Play RPS, trivia, and more directly in Discord.</p>
+      </div>
+      <div class="bg-zinc-900 p-6 rounded-xl gradient-hover shadow-lg float-animate">
+        <h3 class="text-xl font-bold text-orange-300 mb-2">🔧 Various Commands</h3>
+        <p class="text-gray-300">Tailor commands to fit your server’s needs perfectly.</p>
+      </div>
+      <div class="bg-zinc-900 p-6 rounded-xl gradient-hover shadow-lg float-animate">
+        <h3 class="text-xl font-bold text-orange-300 mb-2">📊 Role Management</h3>
+        <p class="text-gray-300">Advanced leveling and auto-role functionality.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Status -->
+  <section id="status" class="py-20 bg-zinc-900 text-center fade-in relative z-10">
+    <h2 class="text-4xl font-bold mb-10 text-orange-400">📡 Quanta Status</h2>
+    <div class="flex justify-center gap-10 flex-wrap px-6">
+      <div class="w-64 bg-zinc-800 p-6 rounded-xl shadow-md gradient-hover">
+        <h3 class="text-lg font-semibold text-orange-300 mb-2">👥 Total Users</h3>
+        <p class="text-gray-300 text-lg" id="member-count">Fetching...</p>
+      </div>
+      <div class="w-64 bg-zinc-800 p-6 rounded-xl shadow-md gradient-hover">
+        <h3 class="text-lg font-semibold text-orange-300 mb-2">🌐 Total Servers</h3>
+        <p class="text-gray-300 text-lg" id="guild-count">Fetching...</p>
+      </div>
+      <div class="w-64 bg-zinc-800 p-6 rounded-xl shadow-md gradient-hover">
+        <h3 class="text-lg font-semibold text-orange-300 mb-2">⏱️ Uptime</h3>
+        <p class="text-gray-300 text-lg" id="uptime">Fetching...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section id="reviews" class="py-20 bg-zinc-900 text-center fade-in relative z-10">
+    <h2 class="text-4xl font-bold mb-10 text-orange-400">⭐ User Reviews</h2>
+    <div class="flex flex-wrap justify-center gap-6 px-8" id="review-container"></div>
+  </section>
+
+  <!-- Team -->
+  <section id="team" class="py-20 bg-zinc-900 text-center fade-in relative z-10">
+    <h2 class="text-4xl font-bold mb-10 text-orange-400">👥 Meet the Minds Behind Quanta</h2>
+    <div class="flex justify-center gap-10 flex-wrap px-6">
+      <div class="w-64 bg-zinc-800 p-6 rounded-xl gradient-hover shadow-lg cursor-pointer float-animate">
+        <h3 class="text-xl font-semibold mb-2 text-orange-300">Avinan</h3>
+        <p class="text-gray-300">Lead Developer & Architect</p>
+      </div>
+      <div class="w-64 bg-zinc-800 p-6 rounded-xl gradient-hover shadow-lg cursor-pointer float-animate">
+        <h3 class="text-xl font-semibold mb-2 text-orange-300">Avinan</h3>
+        <p class="text-gray-300">UI/UX & Brand Designer</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-zinc-950 py-8 text-center relative z-10">
+    <p class="text-gray-400">&copy; 2025 Quanta. Crafted with ⚡ and ☕ by Team Quanta</p>
+    <div class="mt-3 flex justify-center gap-4 text-sm text-gray-500">
+      <a href="https://discord.com/oauth2/authorize?client_id=1391667962322358282" class="nav-hover">Invite</a>
+      <a href="https://discordbotlist.com/bots/quanta" class="nav-hover">Vote</a>
+      <a href="https://discord.gg/KMaVP2xupg" class="nav-hover">Support</a>
+      <a href="#team" class="nav-hover">Team</a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+  <script>
+    VANTA.NET({
+      el: "#vanta-bg",
+      mouseControls: true,
+      touchControls: true,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.0,
+      scaleMobile: 1.0,
+      color: 0xff8c00,
+      backgroundColor: 0x1a1a1a,
+      points: 12.0,
+      maxDistance: 25.0,
+      spacing: 18.0
+    });
+
+    const reviews = [
+      { user: "@Avinan", content: "Quanta is by far the most feature-rich bot I've used!" },
+      { user: "@Jack", content: "Clean UI, smooth music, and moderation that actually works." },
+      { user: "@Beta", content: "Been using it for 6 weeks — rock solid performance." }
+    ];
+    const container = document.getElementById("review-container");
+    reviews.forEach(r => {
+      const card = document.createElement("div");
+      card.className = "w-full sm:w-80 bg-zinc-800 p-5 rounded-xl shadow-md gradient-hover";
+      card.innerHTML = `<h3 class="text-lg font-semibold text-orange-300">${r.user}</h3><p class="text-gray-300 mt-2">${r.content}</p>`;
+      container.appendChild(card);
+    });
+
+    async function fetchStatus() {
+      try {
+        const res = await fetch('/api/status');
+        const data = await res.json();
+
+        document.getElementById('member-count').textContent = `${data.memberCount.toLocaleString()}`;
+        document.getElementById('guild-count').textContent = `${data.guildCount.toLocaleString()}`;
+
+        const diff = data.uptime;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const mins = Math.floor((diff / (1000 * 60)) % 60);
+        document.getElementById('uptime').textContent = `${days}d ${hours}h ${mins}m`;
+      } catch (err) {
+        console.error('Failed to load status:', err);
+      }
+    }
+
+    fetchStatus();
+    setInterval(fetchStatus, 60000);
+  </script>
+</body>
+</html>
