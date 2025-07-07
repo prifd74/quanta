@@ -188,7 +188,7 @@
 
     async function fetchStatus() {
       try {
-        const res = await fetch('/api/status');
+        const res = await fetch('https://meow56.onrender.com/api/status');
         const data = await res.json();
 
         document.getElementById('member-count').textContent = `${data.memberCount.toLocaleString()}`;
