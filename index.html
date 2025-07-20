@@ -1,211 +1,1135 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-zinc-900 text-white">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quanta Discord Bot</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    html, body {
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-      cursor: default;
-    }
-    .gradient-hover:hover {
-      background: linear-gradient(135deg, #ff8c00, #ff4d00);
-      transition: all 0.4s ease;
-      transform: translateY(-6px) scale(1.05);
-      box-shadow: 0 4px 20px rgba(255, 140, 0, 0.4);
-    }
-    .nav-hover:hover {
-      color: #ff8c00;
-      text-shadow: 0 0 8px #ff8c00;
-      transition: all 0.3s ease-in-out;
-    }
-    .fade-in {
-      animation: fadeIn 1.2s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    .float-animate {
-      animation: float 4s ease-in-out infinite;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quanta - 100% Free Discord Bot</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        :root {
+            --primary-orange: #FF6B35;
+            --secondary-orange: #FF8C42;
+            --dark-bg: #0f0f0f;
+            --card-bg: #1a1a1a;
+            --border-color: #2a2a2a;
+        }
+        
+        body {
+            background: var(--dark-bg);
+            color: #fcfafa;
+            overflow-x: hidden;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a1a1a 50%, var(--dark-bg) 100%);
+        }
+        
+        .orange-gradient {
+            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--secondary-orange) 100%);
+        }
+        
+        .glow-orange {
+            box-shadow: 0 0 30px rgba(255, 107, 53, 0.3);
+        }
+        
+        .glow-orange:hover {
+            box-shadow: 0 0 40px rgba(255, 107, 53, 0.5);
+        }
+        
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            background: var(--primary-orange);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.1;
+            }
+            90% {
+                opacity: 0.1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .terminal {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        
+        .terminal-header {
+            background: #161b22;
+            border-bottom: 1px solid #30363d;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .terminal-content {
+            padding: 20px;
+            height: 300px;
+            overflow-y: auto;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .terminal-line {
+            margin-bottom: 8px;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        .typing {
+            border-right: 2px solid var(--primary-orange);
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+        
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-orange);
+            box-shadow: 0 10px 40px rgba(255, 107, 53, 0.2);
+        }
+        
+        .team-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(255, 107, 53, 0.3);
+        }
+        
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-orange), transparent);
+            transition: left 0.5s;
+        }
+        
+        .team-card:hover::before {
+            left: 100%;
+        }
+        
+        .stat-number {
+            background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .floating-btn {
+            position: fixed;
+            right: 30px;
+            background: var(--primary-orange);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4);
+        }
+        
+        .floating-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.6);
+        }
+        
+        .floating-btn.add-server {
+            bottom: 100px;
+        }
+        
+        .floating-btn.join-support {
+            bottom: 40px;
+            background: #5865f2;
+            box-shadow: 0 4px 20px rgba(88, 101, 242, 0.4);
+        }
+        
+        .floating-btn.join-support:hover {
+            box-shadow: 0 8px 30px rgba(88, 101, 242, 0.6);
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+        
+        .scroll-progress {
+            width: 100%;
+            background: linear-gradient(to bottom, var(--primary-orange), var(--secondary-orange));
+            transition: height 0.1s ease;
+        }
+        
+        .testimonial-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            min-height: 200px;
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            border-color: var(--primary-orange);
+        }
+        
+        .faq-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item.active {
+            border-color: var(--primary-orange);
+        }
+        
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            font-weight: 600;
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding: 20px;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+        
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .slide-in-up {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .slide-in-left.active,
+        .slide-in-right.active,
+        .slide-in-up.active {
+            opacity: 1;
+            transform: translate(0);
+        }
+        
+        .code-block {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 15px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: #c9d1d9;
+            overflow-x: auto;
+        }
+        
+        .command {
+            color: #7c3aed;
+        }
+        
+        .bot-response {
+            color: var(--primary-orange);
+        }
+        
+        .user-message {
+            color: #58a6ff;
+        }
+        
+        @media (max-width: 768px) {
+            .floating-btn {
+                right: 20px;
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+            
+            .terminal-content {
+                height: 250px;
+                padding: 15px;
+                font-size: 12px;
+            }
+        }
+    </style>
 </head>
-<body class="min-h-screen flex flex-col relative overflow-x-hidden">
-
-  <!-- 3D Particle Background -->
-  <div class="absolute inset-0 z-0 pointer-events-none" id="vanta-bg"></div>
-  
-  <!-- Navbar -->
-  <nav class="relative z-10 flex justify-between items-center px-10 py-6 bg-zinc-950 shadow-md">
-    <div class="text-2xl font-bold tracking-wide text-orange-400">⚙️ Quanta</div>
-    <div class="flex gap-6 text-lg font-medium">
-      <a href="#team" class="nav-hover">Team</a>
-      <a href="#reviews" class="nav-hover">Reviews</a>
-      <a href="#status" class="nav-hover">Status</a>
-      <a href="https://discord.com/oauth2/authorize?client_id=1391667962322358282" target="_blank" class="nav-hover">Invite</a>
-      <a href="https://discordbotlist.com/bots/quanta" target="_blank" class="nav-hover">Vote</a>
-      <a href="https://discord.gg/KMaVP2xupg" target="_blank" class="nav-hover">Support</a>
+<body>
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
     </div>
-  </nav>
 
-  <!-- Hero Section -->
-  <section class="text-center py-20 px-6 fade-in relative z-10">
-    <h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">
-      Power Up Your Server with Quanta
-    </h1>
-    <p class="text-lg text-gray-300 max-w-xl mx-auto mb-10">
-      Quanta brings blazing speed, powerful tools, and next-gen Discord features for your community.
-    </p>
-    <a href="https://discord.com/oauth2/authorize?client_id=1391667962322358282" target="_blank" class="px-6 py-3 text-lg font-semibold text-black rounded-full bg-gradient-to-r from-orange-400 to-red-500 hover:scale-105 transition">
-      🚀 Invite Quanta
-    </a>
-  </section>
+    <button class="floating-btn add-server glow-orange" onclick="addToServer()">
+        <i class="fab fa-discord mr-2"></i>Add to Server
+    </button>
+    <button class="floating-btn join-support" onclick="joinSupport()">
+        <i class="fas fa-headset mr-2"></i>Join Support
+    </button>
 
-  <!-- Features -->
-  <section class="py-20 bg-zinc-800 text-center fade-in relative z-10">
-    <h2 class="text-4xl font-bold mb-12 text-orange-400">🚀 Quanta Features</h2>
-    <p class="text-lg text-gray-400 max-w-3xl mx-auto mb-10">
-      From powerful moderation to seamless music playback, Quanta is an all-in-one Discord solution designed to scale with your community. Built with speed, stability, and style.
-    </p>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8">
-      <div class="bg-zinc-900 p-6 rounded-xl gradient-hover shadow-lg float-animate">
-        <h3 class="text-xl font-bold text-orange-300 mb-2">🎶 24/7 Music</h3>
-        <p class="text-gray-300">Keep the vibes alive with nonstop music playback and filters.</p>
-      </div>
-      <div class="bg-zinc-900 p-6 rounded-xl gradient-hover shadow-lg float-animate">
-        <h3 class="text-xl font-bold text-orange-300 mb-2">🛡️ Auto Moderation</h3>
-        <p class="text-gray-300">Protect your server with intelligent, real-time filtering.</p>
-      </div>
-      <div class="bg-zinc-900 p-6 rounded-xl gradient-hover shadow-lg float-animate">
-        <h3 class="text-xl font-bold text-orange-300 mb-2">📈 Analytics</h3>
-        <p class="text-gray-300">Monitor server health, growth, and engagement metrics.</p>
-      </div>
-      <div class="bg-zinc-900 p-6 rounded-xl gradient-hover shadow-lg float-animate">
-        <h3 class="text-xl font-bold text-orange-300 mb-2">🎮 Mini Games</h3>
-        <p class="text-gray-300">Play RPS, trivia, and more directly in Discord.</p>
-      </div>
-      <div class="bg-zinc-900 p-6 rounded-xl gradient-hover shadow-lg float-animate">
-        <h3 class="text-xl font-bold text-orange-300 mb-2">🔧 Various Commands</h3>
-        <p class="text-gray-300">Tailor commands to fit your server’s needs perfectly.</p>
-      </div>
-      <div class="bg-zinc-900 p-6 rounded-xl gradient-hover shadow-lg float-animate">
-        <h3 class="text-xl font-bold text-orange-300 mb-2">📊 Role Management</h3>
-        <p class="text-gray-300">Advanced leveling and auto-role functionality.</p>
-      </div>
-    </div>
-  </section>
+    <nav class="fixed top-0 w-full bg-black bg-opacity-90 backdrop-blur-md border-b border-gray-800 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 orange-gradient rounded-lg flex items-center justify-center">
+                    <i class="fas fa-cube text-white text-xl"></i>
+                </div>
+                <span class="text-2xl font-bold">Quanta</span>
+                <span class="px-3 py-1 bg-green-500 text-black text-sm font-bold rounded-full pulse">100% FREE</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#features" class="hover:text-orange-400 transition-colors">Features</a>
+                <a href="#team" class="hover:text-orange-400 transition-colors">Team</a>
+                <a href="#testimonials" class="hover:text-orange-400 transition-colors">Reviews</a>
+                <a href="#faq" class="hover:text-orange-400 transition-colors">FAQ</a>
+            </div>
+            <button class="orange-gradient text-white px-6 py-2 rounded-full font-semibold glow-orange" onclick="addToServer()">
+                Add to Server
+            </button>
+        </div>
+    </nav>
 
-  <!-- Status -->
-  <section id="status" class="py-20 bg-zinc-900 text-center fade-in relative z-10">
-    <h2 class="text-4xl font-bold mb-10 text-orange-400">📡 Quanta Status</h2>
-    <div class="flex justify-center gap-10 flex-wrap px-6">
-      <div class="w-64 bg-zinc-800 p-6 rounded-xl shadow-md gradient-hover">
-        <h3 class="text-lg font-semibold text-orange-300 mb-2">👥 Total Users</h3>
-        <p class="text-gray-300 text-lg" id="member-count">Fetching...</p>
-      </div>
-      <div class="w-64 bg-zinc-800 p-6 rounded-xl shadow-md gradient-hover">
-        <h3 class="text-lg font-semibold text-orange-300 mb-2">🌐 Total Servers</h3>
-        <p class="text-gray-300 text-lg" id="guild-count">Fetching...</p>
-      </div>
-      <div class="w-64 bg-zinc-800 p-6 rounded-xl shadow-md gradient-hover">
-        <h3 class="text-lg font-semibold text-orange-300 mb-2">⏱️ Uptime</h3>
-        <p class="text-gray-300 text-lg" id="uptime">Fetching...</p>
-      </div>
-    </div>
-  </section>
+    <section class="min-h-screen flex items-center gradient-bg relative overflow-hidden pt-20">
+        <div class="particles" id="particles"></div>
+        <div class="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+            <div class="slide-in-left">
+                <div class="flex items-center space-x-3 mb-6">
+                    <span class="px-4 py-2 bg-green-500 text-black text-sm font-bold rounded-full">100% FREE FOREVER</span>
+                    <span class="px-4 py-2 bg-orange-500 text-white text-sm font-bold rounded-full">NO PREMIUM PLANS</span>
+                </div>
+                <h1 class="text-6xl lg:text-7xl font-black mb-6 leading-tight">
+                 Meet <span class="orange-gradient bg-clip-text text-opaque drop-shadow-md">Quanta</span>
+                  </h1>
+                <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                    The most advanced Discord bot that's completely free. No hidden costs, no premium tiers, just powerful features available to everyone.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button class="orange-gradient text-white px-8 py-4 rounded-full font-semibold text-lg glow-orange hover:scale-105 transition-transform" onclick="addToServer()">
+                        <i class="fab fa-discord mr-3"></i>Add to Server - FREE
+                    </button>
+                    <a href="https://discord.com/oauth2/authorize?client_id=1391667962322358282" target="_blank" rel="noopener noreferrer">
+                    <button class="border-2 border-orange-500 text-orange-500 px-8 py-4 rounded-full font-semibold text-lg hover:bg-orange-500 hover:text-white transition-all">
+                    <i class="fas fa-play mr-3"></i>Invite Now
+                    </button>
+                    </a>
 
-  <!-- Reviews -->
-  <section id="reviews" class="py-20 bg-zinc-900 text-center fade-in relative z-10">
-    <h2 class="text-4xl font-bold mb-10 text-orange-400">⭐ User Reviews</h2>
-    <div class="flex flex-wrap justify-center gap-6 px-8" id="review-container"></div>
-  </section>
+                </div>
+                <div class="mt-8 flex items-center space-x-8 text-sm text-gray-400">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-check text-green-400"></i>
+                        <span>100% Free</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-check text-green-400"></i>
+                        <span>No Ads</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-check text-green-400"></i>
+                        <span>Active Staff</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slide-in-right">
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dot bg-red-500"></div>
+                        <div class="terminal-dot bg-yellow-500"></div>
+                        <div class="terminal-dot bg-green-500"></div>
+                        <span class="ml-3 text-gray-400 text-sm">Quanta Discord Bot - Live Demo</span>
+                    </div>
+                    <div class="terminal-content" id="terminalContent">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- Team -->
-  <section id="team" class="py-20 bg-zinc-900 text-center fade-in relative z-10">
-    <h2 class="text-4xl font-bold mb-10 text-orange-400">👥 Meet the Minds Behind Quanta</h2>
-    <div class="flex justify-center gap-10 flex-wrap px-6">
-      <div class="w-64 bg-zinc-800 p-6 rounded-xl gradient-hover shadow-lg cursor-pointer float-animate">
-        <h3 class="text-xl font-semibold mb-2 text-orange-300">Avinan</h3>
-        <p class="text-gray-300">Lead Developer & Architect</p>
-      </div>
-      <div class="w-64 bg-zinc-800 p-6 rounded-xl gradient-hover shadow-lg cursor-pointer float-animate">
-        <h3 class="text-xl font-semibold mb-2 text-orange-300">Avinan</h3>
-        <p class="text-gray-300">UI/UX & Brand Designer</p>
-      </div>
-    </div>
-  </section>
+    <section class="py-20 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="text-center slide-in-up">
+                    <div class="stat-number text-4xl md:text-5xl font-black mb-2" data-target="50000">0</div>
+                    <p class="text-gray-400 font-medium">Servers</p>
+                </div>
+                <div class="text-center slide-in-up" style="animation-delay: 0.1s;">
+                    <div class="stat-number text-4xl md:text-5xl font-black mb-2" data-target="1200000">0</div>
+                    <p class="text-gray-400 font-medium">Users</p>
+                </div>
+                <div class="text-center slide-in-up" style="animation-delay: 0.2s;">
+                    <div class="stat-number text-4xl md:text-5xl font-black mb-2" data-target="5000000">0</div>
+                    <p class="text-gray-400 font-medium">Commands Used</p>
+                </div>
+                <div class="text-center slide-in-up" style="animation-delay: 0.3s;">
+                    <div class="stat-number text-4xl md:text-5xl font-black mb-2" data-target="100">0</div>
+                    <p class="text-gray-400 font-medium">% Free</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- Footer -->
-  <footer class="bg-zinc-950 py-8 text-center relative z-10">
-    <p class="text-gray-400">&copy; 2025 Quanta. Crafted with ⚡ and ☕ by Team Quanta</p>
-    <div class="mt-3 flex justify-center gap-4 text-sm text-gray-500">
-      <a href="https://discord.com/oauth2/authorize?client_id=1391667962322358282" class="nav-hover">Invite</a>
-      <a href="https://discordbotlist.com/bots/quanta" class="nav-hover">Vote</a>
-      <a href="https://discord.gg/KMaVP2xupg" class="nav-hover">Support</a>
-      <a href="#team" class="nav-hover">Team</a>
-    </div>
-  </footer>
+    <section id="features" class="py-20 gradient-bg">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 slide-in-up">
+                <h2 class="text-5xl font-black mb-6">Powerful Features, <span class="orange-gradient bg-clip-text text-opaque">100% Free</span></h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Experience premium functionality without spending a dime. Every feature is available to all users, forever.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="feature-card rounded-xl p-8 slide-in-up">
+                    <div class="w-16 h-16 orange-gradient rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-music text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Music Player</h3>
+                    <p class="text-gray-400 mb-4">High-quality music streaming with queue management, playlists, and 24/7 playback support.</p>
+                    <div class="code-block">
+                        <div class="command">/play</div> <span class="user-message">your favorite song</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card rounded-xl p-8 slide-in-up" style="animation-delay: 0.1s;">
+                    <div class="w-16 h-16 orange-gradient rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-shield-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Advanced Moderation</h3>
+                    <p class="text-gray-400 mb-4">Comprehensive moderation tools with auto-mod, custom filters, and detailed logging.</p>
+                    <div class="code-block">
+                        <div class="command">q!ban</div> <span class="user-message">@user spam</span><br>
+                        <div class="bot-response">✅ User banned successfully</div>
+                    </div>
+                </div>
+                
+                <div class="feature-card rounded-xl p-8 slide-in-up" style="animation-delay: 0.2s;">
+                    <div class="w-16 h-16 orange-gradient rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-gamepad text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Fun & Games</h3>
+                    <p class="text-gray-400 mb-4">Engaging mini-games, trivia, memes, and entertainment commands to keep your server active.</p>
+                    <div class="code-block">
+                        <div class="command">q!trivia</div><br>
+                        <div class="bot-response">🎯 What is the capital of Japan?</div>
+                    </div>
+                </div>
+                
+                <div class="feature-card rounded-xl p-8 slide-in-up" style="animation-delay: 0.3s;">
+                    <div class="w-16 h-16 orange-gradient rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-chart-line text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Server Analytics</h3>
+                    <p class="text-gray-400 mb-4">Detailed insights into your server activity, member engagement, and growth metrics.</p>
+                    <div class="code-block">
+                        <div class="command">q!stats</div><br>
+                        <div class="bot-response">📊 Server Analytics Dashboard</div>
+                    </div>
+                </div>
+                
+                <div class="feature-card rounded-xl p-8 slide-in-up" style="animation-delay: 0.4s;">
+                    <div class="w-16 h-16 orange-gradient rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-robot text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Ticket</h3>
+                    <p class="text-gray-400 mb-4">Organise and manage the problems of users easily and efficiently.</p>
+                    <div class="code-block">
+                        <div class="command">/setup-ticket</div> <span class="user-message">Open Ticket</span><br>
+                        <div class="bot-response">🤖 Creating Ticket...</div>
+                    </div>
+                </div>
+                
+                <div class="feature-card rounded-xl p-8 slide-in-up" style="animation-delay: 0.5s;">
+                    <div class="w-16 h-16 orange-gradient rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-cog text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Custom Commands</h3>
+                    <p class="text-gray-400 mb-4">Create autoresponders, and workflows tailored to your server.</p>
+                    <div class="code-block">
+                        <div class="command">/autoresponder set</div> <span class="user-message">Hey</span><br>
+                        <div class="bot-response">✅ Custom command created</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <p class="text-lg text-gray-300 mb-6">All features are completely free. No subscriptions, no limits, no catches.</p>
+                <button class="orange-gradient text-white px-8 py-4 rounded-full font-semibold text-lg glow-orange hover:scale-105 transition-transform" onclick="addToServer()">
+                    <i class="fab fa-discord mr-3"></i>Start Using All Features - FREE
+                </button>
+            </div>
+        </div>
+    </section>
 
-  <!-- Scripts -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
-  <script>
-    VANTA.NET({
-      el: "#vanta-bg",
-      mouseControls: true,
-      touchControls: true,
-      minHeight: 200.00,
-      minWidth: 200.00,
-      scale: 1.0,
-      scaleMobile: 1.0,
-      color: 0xff8c00,
-      backgroundColor: 0x1a1a1a,
-      points: 12.0,
-      maxDistance: 25.0,
-      spacing: 18.0
-    });
+    
+    <section id="team" class="py-20 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 slide-in-up">
+                <h2 class="text-5xl font-black mb-6">Meet the <span class="orange-gradient bg-clip-text text-opaque">Dream Team</span></h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Passionate developers dedicated to keeping Quanta free and awesome for everyone.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="team-card rounded-xl p-6 text-center slide-in-up">
+                    <div class="w-24 h-24 orange-gradient rounded-full mx-auto mb-4 flex items-center justify-center text-3xl font-bold">
+                        AV
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Avinan</h3>
+                    <p class="text-orange-400 font-medium mb-3">Lead Developer</p>
+                    <p class="text-gray-400 text-sm mb-4">Full-stack wizard behind Quanta's core architecture and AI features.</p>
+                    <div class="flex justify-center space-x-3">
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition-colors">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition-colors">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="team-card rounded-xl p-6 text-center slide-in-up" style="animation-delay: 0.1s;">
+                    <div class="w-24 h-24 orange-gradient rounded-full mx-auto mb-4 flex items-center justify-center text-3xl font-bold">
+                        AV
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Avinan</h3>
+                    <p class="text-orange-400 font-medium mb-3">Backend Engineer</p>
+                    <p class="text-gray-400 text-sm mb-4">Database optimization expert ensuring Quanta runs smoothly 24/7.</p>
+                    <div class="flex justify-center space-x-3">
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition-colors">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition-colors">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="team-card rounded-xl p-6 text-center slide-in-up" style="animation-delay: 0.2s;">
+                    <div class="w-24 h-24 orange-gradient rounded-full mx-auto mb-4 flex items-center justify-center text-3xl font-bold">
+                        AV
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Avinan</h3>
+                    <p class="text-orange-400 font-medium mb-3">UI/UX Designer</p>
+                    <p class="text-gray-400 text-sm mb-4">Creative mind crafting beautiful interfaces and user experiences.</p>
+                    <div class="flex justify-center space-x-3">
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition-colors">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition-colors">
+                            <i class="fab fa-dribbble"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition-colors">
+                            <i class="fab fa-behance"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="team-card rounded-xl p-6 text-center slide-in-up" style="animation-delay: 0.3s;">
+                    <div class="w-24 h-24 orange-gradient rounded-full mx-auto mb-4 flex items-center justify-center text-3xl font-bold">
+                        AV
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Avinan</h3>
+                    <p class="text-orange-400 font-medium mb-3">Community Manager</p>
+                    <p class="text-gray-400 text-sm mb-4">Building bridges between users and developers, ensuring the best experience.</p>
+                    <div class="flex justify-center space-x-3">
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition-colors">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition-colors">
+                            <i class="fab fa-reddit"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    const reviews = [
-      { user: "@Avinan", content: "Quanta is by far the most feature-rich bot I've used!" },
-      { user: "@Jack", content: "Clean UI, smooth music, and moderation that actually works." },
-      { user: "@Beta", content: "Been using it for 6 weeks — rock solid performance." }
-    ];
-    const container = document.getElementById("review-container");
-    reviews.forEach(r => {
-      const card = document.createElement("div");
-      card.className = "w-full sm:w-80 bg-zinc-800 p-5 rounded-xl shadow-md gradient-hover";
-      card.innerHTML = `<h3 class="text-lg font-semibold text-orange-300">${r.user}</h3><p class="text-gray-300 mt-2">${r.content}</p>`;
-      container.appendChild(card);
-    });
+    <section id="testimonials" class="py-20 gradient-bg">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 slide-in-up">
+                <h2 class="text-5xl font-black mb-6">What Users <span class="orange-gradient bg-clip-text text-opaque">Say</span></h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Don't take our word for it. Here's what real users think about Quanta.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="testimonial-card rounded-xl p-8 slide-in-up">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold mr-4">
+                            NO
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Noctis</h4>
+                            <p class="text-gray-400 text-sm">Server Owner</p>
+                        </div>
+                    </div>
+                    <div class="flex mb-4">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <p class="text-gray-300 italic">"I can't believe Quanta is completely free! The music features alone are worth paying for, but the fact that it's free forever is amazing."</p>
+                </div>
+                
+                <div class="testimonial-card rounded-xl p-8 slide-in-up" style="animation-delay: 0.1s;">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold mr-4">
+                            SW
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">SweetHeart</h4>
+                            <p class="text-gray-400 text-sm">Community Moderator</p>
+                        </div>
+                    </div>
+                    <div class="flex mb-4">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <p class="text-gray-300 italic">"The moderation tools are incredibly powerful. I've tried many paid bots, but Quanta's features are unmatched. And it's free!"</p>
+                </div>
+                
+                <div class="testimonial-card rounded-xl p-8 slide-in-up" style="animation-delay: 0.2s;">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold mr-4">
+                            CH
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Christian</h4>
+                            <p class="text-gray-400 text-sm">Gaming Community</p>
+                        </div>
+                    </div>
+                    <div class="flex mb-4">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <p class="text-gray-300 italic">"The AI features are mind-blowing! ChatGPT integration works flawlessly. My server members love interacting with Quanta daily."</p>
+                </div>
+                
+                <div class="testimonial-card rounded-xl p-8 slide-in-up" style="animation-delay: 0.3s;">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white font-bold mr-4">
+                            LF
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Looking Fdny</h4>
+                            <p class="text-gray-400 text-sm">Study Group Admin</p>
+                        </div>
+                    </div>
+                    <div class="flex mb-4">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <p class="text-gray-300 italic">"Perfect for educational servers! The custom commands and analytics help me track student engagement effectively."</p>
+                </div>
+                
+                <div class="testimonial-card rounded-xl p-8 slide-in-up" style="animation-delay: 0.4s;">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center text-white font-bold mr-4">
+                            AV
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Avinan</h4>
+                            <p class="text-gray-400 text-sm">Art Community</p>
+                        </div>
+                    </div>
+                    <div class="flex mb-4">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <p class="text-gray-300 italic">"The fun features keep our art community engaged! Games, memes, and entertainment commands create a vibrant atmosphere."</p>
+                </div>
+                
+                <div class="testimonial-card rounded-xl p-8 slide-in-up" style="animation-delay: 0.5s;">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-indigo-500 rounded-full flex items-center justify-center text-white font-bold mr-4">
+                            AV
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Avinan</h4>
+                            <p class="text-gray-400 text-sm">Tech Startup</p>
+                        </div>
+                    </div>
+                    <div class="flex mb-4">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <p class="text-gray-300 italic">"As a startup, we needed powerful tools without the cost. Quanta delivers enterprise-level features completely free!"</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    async function fetchStatus() {
-      try {
-        const res = await fetch('https://meow56.onrender.com/api/status');
-        const data = await res.json();
+   
+    <section id="faq" class="py-20 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 slide-in-up">
+                <h2 class="text-5xl font-black mb-6">Frequently Asked <span class="orange-gradient bg-clip-text text-opaque">Questions</span></h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Got questions? We've got answers. Learn more about how Quanta stays free and awesome.
+                </p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="faq-item slide-in-up">
+                    <div class="faq-question">
+                        <span>Is Quanta really 100% free forever?</span>
+                        <i class="fas fa-chevron-down transform transition-transform"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray-300">Yes! Quanta is completely free with no hidden costs, premium tiers, or subscription plans. We believe in providing powerful Discord bot features to everyone without any financial barriers. Our mission is to keep it free forever.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item slide-in-up" style="animation-delay: 0.1s;">
+                    <div class="faq-question">
+                        <span>How do you keep the bot free? What's the catch?</span>
+                        <i class="fas fa-chevron-down transform transition-transform"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray-300">There's no catch! We're passionate developers who believe in community-driven projects. We maintain Quanta through optional donations from users who love the bot, and we keep our infrastructure costs low through efficient coding and smart resource management.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item slide-in-up" style="animation-delay: 0.2s;">
+                    <div class="faq-question">
+                        <span>Are there any usage limits or restrictions?</span>
+                        <i class="fas fa-chevron-down transform transition-transform"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray-300">Nope! All features are available to all users without any limits. You can use music commands, moderation tools, AI features, and everything else as much as you want. No daily limits, no monthly quotas, no restrictions.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item slide-in-up" style="animation-delay: 0.3s;">
+                    <div class="faq-question">
+                        <span>What makes Quanta different from other Discord bots?</span>
+                        <i class="fas fa-chevron-down transform transition-transform"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray-300">Quanta offers premium-level features completely free. While other bots charge for advanced features like high-quality music, AI integration, or detailed analytics, we provide all of these at no cost. Plus, our focus on user experience and continuous development sets us apart.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item slide-in-up" style="animation-delay: 0.4s;">
+                    <div class="faq-question">
+                        <span>How often do you update and add new features?</span>
+                        <i class="fas fa-chevron-down transform transition-transform"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray-300">We release updates regularly! New features are added monthly, bug fixes are deployed weekly, and critical updates happen as needed. We're constantly listening to user feedback and working to improve Quanta based on your suggestions.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item slide-in-up" style="animation-delay: 0.5s;">
+                    <div class="faq-question">
+                        <span>Can I contribute to Quanta or suggest features?</span>
+                        <i class="fas fa-chevron-down transform transition-transform"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray-300">Absolutely! Quanta is community-driven, and we love hearing from users. Join our support Discord to suggest features, report bugs, or even contribute code if you're a developer. Your input helps shape Quanta's future!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        document.getElementById('member-count').textContent = `${data.memberCount.toLocaleString()}`;
-        document.getElementById('guild-count').textContent = `${data.guildCount.toLocaleString()}`;
+    
+    <section class="py-20 gradient-bg border-t border-gray-800">
+        <div class="container mx-auto px-6 text-center">
+            <div class="slide-in-up">
+                <h2 class="text-5xl font-black mb-6">Ready to Enhance Your Server?</h2>
+                <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                    Join over 50,000 servers already using Quanta. Add powerful features to your Discord server in seconds - completely free!
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button class="orange-gradient text-white px-10 py-5 rounded-full font-semibold text-xl glow-orange hover:scale-105 transition-transform" onclick="addToServer()">
+                        <i class="fab fa-discord mr-3"></i>Add Quanta to Your Server
+                    </button>
+                    <button class="border-2 border-orange-500 text-orange-500 px-10 py-5 rounded-full font-semibold text-xl hover:bg-orange-500 hover:text-white transition-all" onclick="joinSupport()">
+                        <i class="fas fa-headset mr-3"></i>Join Our Community
+                    </button>
+                </div>
+                <p class="text-gray-400 mt-6">✨ 100% Free • No Setup Required • Works Instantly</p>
+            </div>
+        </div>
+    </section>
 
-        const diff = data.uptime;
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const mins = Math.floor((diff / (1000 * 60)) % 60);
-        document.getElementById('uptime').textContent = `${days}d ${hours}h ${mins}m`;
-      } catch (err) {
-        console.error('Failed to load status:', err);
-      }
-    }
+    
+    <footer class="bg-black border-t border-gray-800 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 orange-gradient rounded-lg flex items-center justify-center">
+                            <i class="fas fa-cube text-white text-xl"></i>
+                        </div>
+                        <span class="text-2xl font-bold">Quanta</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">The most powerful Discord bot that's completely free. No premium plans, no hidden costs.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition-colors">
+                            <i class="fab fa-discord text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition-colors">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-orange-400 transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Features</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-orange-400 transition-colors">Music Player</a></li>
+                        <li><a href="#" class="hover:text-orange-400 transition-colors">Moderation</a></li>
+                        <li><a href="#" class="hover:text-orange-400 transition-colors">AI Assistant</a></li>
+                        <li><a href="#" class="hover:text-orange-400 transition-colors">Games & Fun</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-orange-400 transition-colors">Documentation</a></li>
+                        <li><a href="#" class="hover:text-orange-400 transition-colors">Discord Server</a></li>
+                        <li><a href="#" class="hover:text-orange-400 transition-colors">Bug Reports</a></li>
+                        <li><a href="#" class="hover:text-orange-400 transition-colors">Feature Requests</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-orange-400 transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-orange-400 transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-orange-400 transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-orange-400 transition-colors">Open Source</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Quanta Discord Bot. Made with ❤️ for the Discord community. Forever free.</p>
+            </div>
+        </div>
+    </footer>
 
-    fetchStatus();
-    setInterval(fetchStatus, 60000);
-  </script>
+    <script>
+        
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 4 + 1 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particles.appendChild(particle);
+            }
+        }
+
+        const terminalCommands = [
+            { user: 'ServerAdmin', command: '/help', response: '📋 Here are my available commands...' },
+            { user: 'MusicLover', command: '/play Never Gonna Give You Up', response: '🎵 Now playing: Never Gonna Give You Up by Rick Astley' },
+            { user: 'ModeratorX', command: '/ban @SpamBot spamming', response: '✅ Successfully banned @SpamBot for spamming' },
+            { user: 'GamerGirl', command: '/trivia start', response: '🎯 Trivia started! Question: What is the capital of Japan?' },
+            { user: 'AIFan', command: '/ai explain quantum computing', response: '🤖 Quantum computing uses quantum mechanics principles...' },
+            { user: 'DevUser', command: '/welcome-set Welcome to our amazing server!', response: '✅ Custom welcome message created successfully!' },
+            { user: 'StatsGuy', command: 'q!support', response: '📊 Here is the support server of the bot https://discord.gg/kQArVAnF' },
+            { user: 'FunSeeker', command: '/userinfo', response: '⭐ *sends a  user info card*' }
+        ];
+
+        let currentCommandIndex = 0;
+        let isTyping = false;
+
+        function typeCommand() {
+            if (isTyping) return;
+            isTyping = true;
+            
+            const terminal = document.getElementById('terminalContent');
+            const cmd = terminalCommands[currentCommandIndex];
+            
+      
+            const commandLine = document.createElement('div');
+            commandLine.className = 'terminal-line';
+            commandLine.innerHTML = `<span class="text-green-400">${cmd.user}@discord</span><span class="text-gray-500">:</span><span class="text-blue-400">~</span><span class="text-gray-500">$</span> <span class="command">${cmd.command}</span><span class="typing"></span>`;
+            terminal.appendChild(commandLine);
+            
+           
+            setTimeout(() => {
+                const typingCursor = commandLine.querySelector('.typing');
+                typingCursor.remove();
+                
+                
+                const responseLine = document.createElement('div');
+                responseLine.className = 'terminal-line';
+                responseLine.innerHTML = `<span class="bot-response">[Quanta Bot]</span> ${cmd.response}`;
+                terminal.appendChild(responseLine);
+                
+               
+                const emptyLine = document.createElement('div');
+                emptyLine.className = 'terminal-line';
+                emptyLine.innerHTML = '&nbsp;';
+                terminal.appendChild(emptyLine);
+                
+                
+                terminal.scrollTop = terminal.scrollHeight;
+               
+                while (terminal.children.length > 16) {
+                    terminal.removeChild(terminal.firstChild);
+                }
+                
+                currentCommandIndex = (currentCommandIndex + 1) % terminalCommands.length;
+                isTyping = false;
+            }, 1500);
+        }
+
+      
+        function animateStats() {
+            const stats = document.querySelectorAll('.stat-number[data-target]');
+            
+            stats.forEach(stat => {
+                const target = parseInt(stat.getAttribute('data-target'));
+                const increment = target / 100;
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        stat.textContent = target.toLocaleString();
+                        clearInterval(timer);
+                    } else {
+                        stat.textContent = Math.floor(current).toLocaleString();
+                    }
+                }, 50);
+            });
+        }
+
+        
+        function updateScrollProgress() {
+            const scrolled = window.pageYOffset;
+            const maxHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrolled / maxHeight) * 100;
+            document.getElementById('scrollProgress').style.height = progress + '%';
+        }
+
+        
+        function observeElements() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '50px'
+            });
+
+            document.querySelectorAll('.slide-in-left, .slide-in-right, .slide-in-up').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        
+        function initFAQ() {
+            document.querySelectorAll('.faq-question').forEach(question => {
+                question.addEventListener('click', () => {
+                    const faqItem = question.parentElement;
+                    const icon = question.querySelector('i');
+                    
+                    faqItem.classList.toggle('active');
+                    icon.style.transform = faqItem.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+                    
+                    
+                    document.querySelectorAll('.faq-item').forEach(item => {
+                        if (item !== faqItem) {
+                            item.classList.remove('active');
+                            item.querySelector('i').style.transform = 'rotate(0deg)';
+                        }
+                    });
+                });
+            });
+        }
+
+        
+        function addToServer() {
+            
+            window.open('https://discord.com/oauth2/authorize?client_id=1391667962322358282', '_blank');
+        }
+
+        function joinSupport() {
+            
+            window.open('https://discord.gg/kQArVAnF', '_blank');
+        }
+
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            observeElements();
+            initFAQ();
+            
+            
+            setTimeout(() => {
+                typeCommand();
+                setInterval(typeCommand, 4000);
+            }, 2000);
+            
+           
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateStats();
+                        statsObserver.unobserve(entry.target);
+                    }
+                });
+            });
+            
+            const statsSection = document.querySelector('.stat-number');
+            if (statsSection) {
+                statsObserver.observe(statsSection.parentElement);
+            }
+        });
+
+       
+        window.addEventListener('scroll', updateScrollProgress);
+
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
